@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Enhanced Animation Login Page</title>
+    <title>Enhanced Animation Login & Registration Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     <style>
@@ -310,9 +310,10 @@
         .finger:nth-child(3) .nail {
             top: 0px;
         }
-        /* Enhanced Login Form */
+        /* Enhanced Login and Registration Form */
         
-        .login {
+        .login,
+        .register {
             position: relative;
             display: flex;
             flex-direction: column;
@@ -326,12 +327,14 @@
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
         
-        .login:hover {
+        .login:hover,
+        .register:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 35px rgba(79, 70, 229, 0.3);
         }
         
-        .login label {
+        .login label,
+        .register label {
             position: relative;
             margin: 15px 0;
             display: flex;
@@ -339,7 +342,8 @@
             transition: all 0.3s ease;
         }
         
-        .login label i {
+        .login label i,
+        .register label i {
             position: absolute;
             left: 15px;
             color: #4f46e5;
@@ -347,7 +351,8 @@
             transition: color 0.3s ease;
         }
         
-        .login input {
+        .login input,
+        .register input {
             width: 100%;
             height: 50px;
             padding: 0 15px 0 50px;
@@ -360,23 +365,27 @@
             transition: all 0.3s ease;
         }
         
-        .login input::placeholder {
+        .login input::placeholder,
+        .register input::placeholder {
             color: rgba(79, 70, 229, 0.6);
         }
         
-        .login input:focus {
+        .login input:focus,
+        .register input:focus {
             background: rgba(224, 231, 255, 1);
             box-shadow: 0 0 12px rgba(79, 70, 229, 0.5);
             transform: translateX(5px);
         }
         
-        .login .password-container {
+        .login .password-container,
+        .register .password-container {
             position: relative;
             display: flex;
             align-items: center;
         }
         
-        .login .password-button {
+        .login .password-button,
+        .register .password-button {
             position: absolute;
             right: 10px;
             width: 80px;
@@ -390,13 +399,15 @@
             transition: all 0.3s ease;
         }
         
-        .login .password-button:hover {
+        .login .password-button:hover,
+        .register .password-button:hover {
             transform: translateY(-2px);
             background: linear-gradient(45deg, #e0e7ff, #a5b4fc);
             box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
         }
         
-        .login .login-button {
+        .login .login-button,
+        .register .register-button {
             width: 100%;
             height: 50px;
             margin: 25px 0;
@@ -410,7 +421,8 @@
             transition: all 0.3s ease;
         }
         
-        .login .login-button:hover {
+        .login .login-button:hover,
+        .register .register-button:hover {
             transform: translateY(-3px);
             background: linear-gradient(45deg, #818cf8, #4f46e5);
             box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
@@ -436,6 +448,10 @@
         .footer a:hover {
             color: #818cf8;
             text-decoration: underline;
+        }
+        
+        .hidden {
+            display: none;
         }
         
         @keyframes breath {
@@ -522,7 +538,7 @@
         </div>
 
         <!-- Enhanced Login Form -->
-        <form class="login" id="login-form">
+        <div class="login" id="login-form">
             <label for="username">
                 <i class="fas fa-user" aria-label="Username icon"></i>
                 <input
@@ -544,32 +560,149 @@
                 />
                 <button class="password-button" type="button">Show</button>
             </label>
-            <button class="login-button" type="submit">Sign In</button>
-        </form>
+            <button class="login-button" type="button">Sign In</button>
+        </div>
+
+        <!-- Enhanced Registration Form -->
+        <div class="register hidden" id="register-form">
+            <label for="reg-username">
+                <i class="fas fa-user" aria-label="Username icon"></i>
+                <input
+                    class="reg-username"
+                    id="reg-username"
+                    type="text"
+                    autocomplete="username"
+                    placeholder="Username"
+                />
+            </label>
+            <label for="reg-email">
+                <i class="fas fa-envelope" aria-label="Email icon"></i>
+                <input
+                    class="reg-email"
+                    id="reg-email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="Email"
+                />
+            </label>
+            <label for="reg-password" class="password-container">
+                <i class="fas fa-lock" aria-label="Password icon"></i>
+                <input
+                    class="reg-password"
+                    id="reg-password"
+                    type="password"
+                    autocomplete="new-password"
+                    placeholder="Password"
+                />
+                <button class="password-button" type="button">Show</button>
+            </label>
+            <label for="reg-confirm-password" class="password-container">
+                <i class="fas fa-lock" aria-label="Confirm Password icon"></i>
+                <input
+                    class="reg-confirm-password"
+                    id="reg-confirm-password"
+                    type="password"
+                    autocomplete="new-password"
+                    placeholder="Confirm Password"
+                />
+                <button class="password-button" type="button">Show</button>
+            </label>
+            <button class="register-button" type="button">Sign Up</button>
+        </div>
 
         <div class="footer">
             <p>
                 Don't have an account yet?
-                <a href="registrasi.html">Sign Up</a>
+                <a href="#" id="show-register">Sign Up</a>
+                <span> | </span>
+                <a href="#" id="show-login" class="hidden">Sign In</a>
             </p>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
     <script>
-        let usernameInput = document.querySelector(".username");
-        let passwordInput = document.querySelector(".password");
-        let showPasswordButton = document.querySelector(".password-button");
+        // Common elements
         let face = document.querySelector(".face");
         let ears = document.querySelectorAll(".ear");
         let eyes = document.querySelectorAll(".eye");
         let nose = document.querySelector(".nose");
         let mouth = document.querySelector(".mouth");
         let hands = document.querySelectorAll(".hand");
-        let loginForm = document.querySelector("#login-form");
 
-        // Username input: head rotation and ear wiggle
-        usernameInput.addEventListener("focus", (event) => {
+        // Login form elements
+        let usernameInput = document.querySelector(".username");
+        let passwordInput = document.querySelector(".password");
+        let showPasswordButton = document.querySelector(".login .password-button");
+        let loginForm = document.querySelector("#login-form");
+        let loginButton = document.querySelector(".login-button");
+
+        // Registration form elements
+        let regUsernameInput = document.querySelector(".reg-username");
+        let regEmailInput = document.querySelector(".reg-email");
+        let regPasswordInput = document.querySelector(".reg-password");
+        let regConfirmPasswordInput = document.querySelector(".reg-confirm-password");
+        let regShowPasswordButtons = document.querySelectorAll(".register .password-button");
+        let registerForm = document.querySelector("#register-form");
+        let registerButton = document.querySelector(".register-button");
+
+        // Toggle form elements
+        let showRegisterLink = document.querySelector("#show-register");
+        let showLoginLink = document.querySelector("#show-login");
+
+        // Toggle between login and register forms
+        showRegisterLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            loginForm.classList.add("hidden");
+            registerForm.classList.remove("hidden");
+            showRegisterLink.classList.add("hidden");
+            showLoginLink.classList.remove("hidden");
+        });
+
+        showLoginLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            loginForm.classList.remove("hidden");
+            registerForm.classList.add("hidden");
+            showRegisterLink.classList.remove("hidden");
+            showLoginLink.classList.add("hidden");
+        });
+
+        // Username input: head rotation and ear wiggle (for both forms)
+        function handleUsernameInput(input) {
+            input.addEventListener("focus", (event) => {
+                ears.forEach((ear) => ear.classList.add("active"));
+                face.style.setProperty("--rotate-head", "5deg");
+                hands.forEach((hand) => {
+                    hand.classList.remove("close-eyes");
+                    hand.classList.remove("peek");
+                });
+            });
+
+            input.addEventListener("blur", (event) => {
+                ears.forEach((ear) => ear.classList.remove("active"));
+                face.style.setProperty("--rotate-head", "0deg");
+                hands.forEach((hand) => {
+                    hand.classList.remove("close-eyes");
+                    hand.classList.remove("peek");
+                });
+            });
+
+            input.addEventListener(
+                "input",
+                _.throttle((event) => {
+                    let length = Math.min(event.target.value.length - 16, 19);
+                    face.style.setProperty("--rotate-head", `${-length}deg`);
+                    ears.forEach((ear) => ear.classList.add("active"));
+                    setTimeout(() => ears.forEach((ear) => ear.classList.remove("active")), 300);
+                }, 100)
+            );
+        }
+
+        handleUsernameInput(usernameInput);
+        handleUsernameInput(regUsernameInput);
+
+        // Email input: similar to username for registration
+        regEmailInput.addEventListener("focus", (event) => {
             ears.forEach((ear) => ear.classList.add("active"));
             face.style.setProperty("--rotate-head", "5deg");
             hands.forEach((hand) => {
@@ -578,7 +711,7 @@
             });
         });
 
-        usernameInput.addEventListener("blur", (event) => {
+        regEmailInput.addEventListener("blur", (event) => {
             ears.forEach((ear) => ear.classList.remove("active"));
             face.style.setProperty("--rotate-head", "0deg");
             hands.forEach((hand) => {
@@ -587,7 +720,7 @@
             });
         });
 
-        usernameInput.addEventListener(
+        regEmailInput.addEventListener(
             "input",
             _.throttle((event) => {
                 let length = Math.min(event.target.value.length - 16, 19);
@@ -597,32 +730,38 @@
             }, 100)
         );
 
-        // Password input: hands cover eyes
-        passwordInput.addEventListener("focus", (event) => {
-            eyes.forEach((eye) => eye.classList.add("closed"));
-            nose.classList.add("active");
-            mouth.classList.add("active");
-            document.querySelector(".tongue").classList.remove("breath");
-            hands.forEach((hand) => {
-                hand.classList.remove("peek");
-                hand.classList.add("close-eyes");
+        // Password input: hands cover eyes (for both forms)
+        function handlePasswordInput(input) {
+            input.addEventListener("focus", (event) => {
+                eyes.forEach((eye) => eye.classList.add("closed"));
+                nose.classList.add("active");
+                mouth.classList.add("active");
+                document.querySelector(".tongue").classList.remove("breath");
+                hands.forEach((hand) => {
+                    hand.classList.remove("peek");
+                    hand.classList.add("close-eyes");
+                });
             });
-        });
 
-        passwordInput.addEventListener("blur", (event) => {
-            eyes.forEach((eye) => eye.classList.remove("closed"));
-            nose.classList.remove("active");
-            mouth.classList.remove("active");
-            document.querySelector(".tongue").classList.add("breath");
-            hands.forEach((hand) => {
-                hand.classList.remove("close-eyes");
-                hand.classList.remove("peek");
+            input.addEventListener("blur", (event) => {
+                eyes.forEach((eye) => eye.classList.remove("closed"));
+                nose.classList.remove("active");
+                mouth.classList.remove("active");
+                document.querySelector(".tongue").classList.add("breath");
+                hands.forEach((hand) => {
+                    hand.classList.remove("close-eyes");
+                    hand.classList.remove("peek");
+                });
             });
-        });
+        }
 
-        // Show/hide password: hands peek
+        handlePasswordInput(passwordInput);
+        handlePasswordInput(regPasswordInput);
+        handlePasswordInput(regConfirmPasswordInput);
+
+        // Show/hide password: hands peek (for login form)
         showPasswordButton.addEventListener("click", (event) => {
-            event.preventDefault(); // Prevent default button behavior
+            event.preventDefault();
             if (passwordInput.type === "text") {
                 passwordInput.type = "password";
                 showPasswordButton.textContent = "Show";
@@ -646,9 +785,38 @@
             }
         });
 
-        // Form submission handling
-        loginForm.addEventListener("submit", (event) => {
-            event.preventDefault(); // Prevent default form submission
+        // Show/hide password: hands peek (for registration form)
+        regShowPasswordButtons.forEach((button, index) => {
+            button.addEventListener("click", (event) => {
+                event.preventDefault();
+                const input = index === 0 ? regPasswordInput : regConfirmPasswordInput;
+                if (input.type === "text") {
+                    input.type = "password";
+                    button.textContent = "Show";
+                    eyes.forEach((eye) => eye.classList.add("closed"));
+                    nose.classList.remove("active");
+                    mouth.classList.remove("active");
+                    hands.forEach((hand) => {
+                        hand.classList.remove("peek");
+                        hand.classList.add("close-eyes");
+                    });
+                } else {
+                    input.type = "text";
+                    button.textContent = "Hide";
+                    eyes.forEach((eye) => eye.classList.remove("closed"));
+                    nose.classList.add("active");
+                    mouth.classList.add("active");
+                    hands.forEach((hand) => {
+                        hand.classList.remove("close-eyes");
+                        hand.classList.add("peek");
+                    });
+                }
+            });
+        });
+
+        // Login form submission
+        loginButton.addEventListener("click", (event) => {
+            event.preventDefault();
             const username = usernameInput.value.trim();
             const password = passwordInput.value.trim();
 
@@ -657,22 +825,37 @@
                 return;
             }
 
-            // Placeholder for actual form submission logic (e.g., send to server)
-            console.log("Form submitted:", {
+            console.log("Login submitted:", {
                 username,
                 password
             });
-            // Example: You can add an AJAX call here to send data to a server
-            // fetch('/your-login-endpoint', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ username, password })
-            // })
-            // .then(response => response.json())
-            // .then(data => console.log('Success:', data))
-            // .catch(error => console.error('Error:', error));
-
             alert("Login attempt successful! (Placeholder)");
+        });
+
+        // Registration form submission
+        registerButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            const username = regUsernameInput.value.trim();
+            const email = regEmailInput.value.trim();
+            const password = regPasswordInput.value.trim();
+            const confirmPassword = regConfirmPasswordInput.value.trim();
+
+            if (!username || !email || !password || !confirmPassword) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            console.log("Registration submitted:", {
+                username,
+                email,
+                password
+            });
+            alert("Registration attempt successful! (Placeholder)");
         });
     </script>
 </body>
