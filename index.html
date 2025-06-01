@@ -6,7 +6,448 @@
     <title>Enhanced Animation Login Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
-    <link rel="stylesheet" href="/style.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;500;600;700&display=swap");
+        * {
+            box-sizing: border-box;
+            text-transform: capitalize;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e0e7ff, #a5b4fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 500px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+            border: 1px solid rgba(165, 180, 252, 0.5);
+        }
+        /* Dog Face Animation */
+        
+        .face {
+            position: relative;
+            width: 200px;
+            height: 150px;
+            margin: 20px auto;
+            --rotate-head: 0deg;
+            transform: rotate(var(--rotate-head));
+            transition: transform 0.3s ease;
+            transform-origin: center 20px;
+        }
+        
+        .ear {
+            position: absolute;
+            top: -110px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #4b5e7a;
+            transition: transform 0.4s ease;
+        }
+        
+        .ear.ear--left {
+            left: -135px;
+        }
+        
+        .ear.ear--right {
+            right: -135px;
+        }
+        
+        .ear.active {
+            transform: rotate(10deg) scale(1.1);
+        }
+        
+        .eyes {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .eye {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #4b5e7a;
+            position: relative;
+            transition: transform 0.2s ease, height 0.3s ease;
+        }
+        
+        .eye.eye--left {
+            margin-right: 40px;
+        }
+        
+        .eye.eye--right {
+            margin-left: 40px;
+        }
+        
+        .eye .glow {
+            position: absolute;
+            top: 3px;
+            right: -12px;
+            width: 12px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #e0e7ff;
+            transform: rotate(38deg);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .eye.active .glow {
+            transform: rotate(38deg) scale(1.2);
+        }
+        
+        .eye.closed {
+            height: 5px;
+            overflow: hidden;
+        }
+        
+        .eye.closed .glow {
+            opacity: 0;
+        }
+        
+        .nose {
+            position: relative;
+            top: 30px;
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .nose .glow {
+            position: absolute;
+            top: 3px;
+            left: 32%;
+            width: 15px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #a5b4fc;
+        }
+        
+        .nose.active {
+            transform: scale(1.2);
+        }
+        
+        .mouth {
+            position: relative;
+            margin-top: 45px;
+        }
+        
+        .smile {
+            position: absolute;
+            left: -28px;
+            top: -19px;
+            transform: scaleX(1.1);
+            stroke: #4b5e7a;
+            transition: transform 0.3s ease;
+        }
+        
+        .mouth.active .smile {
+            transform: scaleX(1.3) scaleY(1.1);
+        }
+        
+        .mouth-hole {
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 60px;
+            height: 15px;
+            border-radius: 50%/100% 100% 0% 0;
+            transform: rotate(180deg);
+            background-color: #4b5e7a;
+            z-index: -1;
+        }
+        
+        .tongue {
+            position: relative;
+            top: 5px;
+            width: 30px;
+            height: 20px;
+            background-color: #fcd1d5;
+            transform-origin: top;
+            transform: rotateX(60deg);
+        }
+        
+        .tongue.breath {
+            animation: breath 0.5s infinite linear;
+        }
+        
+        .tongue-top {
+            position: absolute;
+            bottom: -15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: #fcd1d5;
+        }
+        
+        .line {
+            position: absolute;
+            top: 0;
+            width: 30px;
+            height: 5px;
+            background-color: #f9a7ab;
+        }
+        
+        .median {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 25px;
+            border-radius: 5px;
+            background-color: #f9a7ab;
+        }
+        
+        .hands {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .hand {
+            position: absolute;
+            top: -3px;
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            z-index: 1;
+        }
+        
+        .hand--left {
+            left: -85px;
+        }
+        
+        .hand--left.hide {
+            transform: translate(2px, -155px) rotate(-160deg);
+        }
+        
+        .hand--left.peek {
+            transform: translate(0px, -120px) rotate(-160deg);
+        }
+        
+        .hand--left.close-eyes {
+            transform: translate(0px, -50px) rotate(-20deg);
+        }
+        
+        .hand--right {
+            left: 30px;
+        }
+        
+        .hand--right.hide {
+            transform: translate(-6px, -155px) rotate(160deg);
+        }
+        
+        .hand--right.peek {
+            transform: translate(-4px, -120px) rotate(160deg);
+        }
+        
+        .hand--right.close-eyes {
+            transform: translate(-4px, -50px) rotate(20deg);
+        }
+        
+        .finger {
+            position: relative;
+            z-index: 0;
+        }
+        
+        .finger .bone {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #4b5e7a;
+            border-bottom: none;
+            border-top: none;
+            background-color: #fcd34d;
+        }
+        
+        .finger .nail {
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 20px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #4b5e7a;
+            background-color: #fcd34d;
+            z-index: -1;
+        }
+        
+        .finger:nth-child(1),
+        .finger:nth-child(3) {
+            left: 4px;
+            z-index: 1;
+        }
+        
+        .finger:nth-child(1) .bone,
+        .finger:nth-child(3) .bone {
+            height: 10px;
+        }
+        
+        .finger:nth-child(3) {
+            left: -4px;
+        }
+        
+        .finger:nth-child(2) {
+            top: -5px;
+            z-index: 2;
+        }
+        
+        .finger:nth-child(1) .nail,
+        .finger:nth-child(3) .nail {
+            top: 0px;
+        }
+        /* Enhanced Login Form */
+        
+        .login {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.2);
+            border: 1px solid rgba(165, 180, 252, 0.6);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        .login:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(79, 70, 229, 0.3);
+        }
+        
+        .login label {
+            position: relative;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .login label i {
+            position: absolute;
+            left: 15px;
+            color: #4f46e5;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .login input {
+            width: 100%;
+            height: 50px;
+            padding: 0 15px 0 50px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(224, 231, 255, 0.8);
+            color: #312e81;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .login input::placeholder {
+            color: rgba(79, 70, 229, 0.6);
+        }
+        
+        .login input:focus {
+            background: rgba(224, 231, 255, 1);
+            box-shadow: 0 0 12px rgba(79, 70, 229, 0.5);
+            transform: translateX(5px);
+        }
+        
+        .login .password-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .login .password-button {
+            position: absolute;
+            right: 10px;
+            width: 80px;
+            height: 35px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #a5b4fc, #e0e7ff);
+            color: #312e81;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .login .password-button:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(45deg, #e0e7ff, #a5b4fc);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+        }
+        
+        .login .login-button {
+            width: 100%;
+            height: 50px;
+            margin: 25px 0;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #4f46e5, #818cf8);
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .login .login-button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(45deg, #818cf8, #4f46e5);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+        }
+        
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            color: #312e81;
+            font-size: 1rem;
+        }
+        
+        .footer p {
+            font-family: "Poppins", sans-serif;
+        }
+        
+        .footer a {
+            color: #4f46e5;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: #818cf8;
+            text-decoration: underline;
+        }
+        
+        @keyframes breath {
+            0%,
+            100% {
+                transform: rotateX(0deg);
+            }
+            50% {
+                transform: rotateX(60deg);
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -26,7 +467,7 @@
                 <svg width="38.161" height="22.03">
                     <path
                         d="M2.017 10.987Q-.563 7.513.157 4.754C.877 1.994 2.976.135 6.164.093 16.4-.04 22.293-.022 32.048.093c3.501.042 5.48 2.081 6.02 4.661q.54 2.579-2.051 6.233-8.612 10.979-16.664 11.043-8.053.063-17.336-11.043z"
-                        fill="#243946"
+                        fill="#4b5e7a"
                     ></path>
                 </svg>
                 <div class="glow"></div>
@@ -115,8 +556,125 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
-    <script src="/script.js"></script>
+    <script>
+        let usernameInput = document.querySelector(".username");
+        let passwordInput = document.querySelector(".password");
+        let showPasswordButton = document.querySelector(".password-button");
+        let face = document.querySelector(".face");
+        let ears = document.querySelectorAll(".ear");
+        let eyes = document.querySelectorAll(".eye");
+        let nose = document.querySelector(".nose");
+        let mouth = document.querySelector(".mouth");
+        let hands = document.querySelectorAll(".hand");
+        let loginForm = document.querySelector("#login-form");
 
+        // Username input: head rotation and ear wiggle
+        usernameInput.addEventListener("focus", (event) => {
+            ears.forEach((ear) => ear.classList.add("active"));
+            face.style.setProperty("--rotate-head", "5deg");
+            hands.forEach((hand) => {
+                hand.classList.remove("close-eyes");
+                hand.classList.remove("peek");
+            });
+        });
+
+        usernameInput.addEventListener("blur", (event) => {
+            ears.forEach((ear) => ear.classList.remove("active"));
+            face.style.setProperty("--rotate-head", "0deg");
+            hands.forEach((hand) => {
+                hand.classList.remove("close-eyes");
+                hand.classList.remove("peek");
+            });
+        });
+
+        usernameInput.addEventListener(
+            "input",
+            _.throttle((event) => {
+                let length = Math.min(event.target.value.length - 16, 19);
+                face.style.setProperty("--rotate-head", `${-length}deg`);
+                ears.forEach((ear) => ear.classList.add("active"));
+                setTimeout(() => ears.forEach((ear) => ear.classList.remove("active")), 300);
+            }, 100)
+        );
+
+        // Password input: hands cover eyes
+        passwordInput.addEventListener("focus", (event) => {
+            eyes.forEach((eye) => eye.classList.add("closed"));
+            nose.classList.add("active");
+            mouth.classList.add("active");
+            document.querySelector(".tongue").classList.remove("breath");
+            hands.forEach((hand) => {
+                hand.classList.remove("peek");
+                hand.classList.add("close-eyes");
+            });
+        });
+
+        passwordInput.addEventListener("blur", (event) => {
+            eyes.forEach((eye) => eye.classList.remove("closed"));
+            nose.classList.remove("active");
+            mouth.classList.remove("active");
+            document.querySelector(".tongue").classList.add("breath");
+            hands.forEach((hand) => {
+                hand.classList.remove("close-eyes");
+                hand.classList.remove("peek");
+            });
+        });
+
+        // Show/hide password: hands peek
+        showPasswordButton.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent default button behavior
+            if (passwordInput.type === "text") {
+                passwordInput.type = "password";
+                showPasswordButton.textContent = "Show";
+                eyes.forEach((eye) => eye.classList.add("closed"));
+                nose.classList.remove("active");
+                mouth.classList.remove("active");
+                hands.forEach((hand) => {
+                    hand.classList.remove("peek");
+                    hand.classList.add("close-eyes");
+                });
+            } else {
+                passwordInput.type = "text";
+                showPasswordButton.textContent = "Hide";
+                eyes.forEach((eye) => eye.classList.remove("closed"));
+                nose.classList.add("active");
+                mouth.classList.add("active");
+                hands.forEach((hand) => {
+                    hand.classList.remove("close-eyes");
+                    hand.classList.add("peek");
+                });
+            }
+        });
+
+        // Form submission handling
+        loginForm.addEventListener("submit", (event) => {
+            event.preventDefault(); // Prevent default form submission
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!username || !password) {
+                alert("Please enter both username and password.");
+                return;
+            }
+
+            // Placeholder for actual form submission logic (e.g., send to server)
+            console.log("Form submitted:", {
+                username,
+                password
+            });
+            // Example: You can add an AJAX call here to send data to a server
+            // fetch('/your-login-endpoint', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ username, password })
+            // })
+            // .then(response => response.json())
+            // .then(data => console.log('Success:', data))
+            // .catch(error => console.error('Error:', error));
+
+            alert("Login attempt successful! (Placeholder)");
+        });
+    </script>
 </body>
 
 </html>
